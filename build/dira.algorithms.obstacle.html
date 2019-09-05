@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dira.algorithms.obstacle package &mdash; DiRa 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/dira_logo_32.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #343131" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/dira-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">dira.algorithms.obstacle package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-dira.algorithms.obstacle.detection">dira.algorithms.obstacle.detection module</a></li>
+<li><a class="reference internal" href="#module-dira.algorithms.obstacle">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DiRa</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>dira.algorithms.obstacle package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/fpt-dira/dira-docs/blob/master/docs/dira.algorithms.obstacle.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dira-algorithms-obstacle-package">
+<h1>dira.algorithms.obstacle package<a class="headerlink" href="#dira-algorithms-obstacle-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dira.algorithms.obstacle.detection">
+<span id="dira-algorithms-obstacle-detection-module"></span><h2>dira.algorithms.obstacle.detection module<a class="headerlink" href="#module-dira.algorithms.obstacle.detection" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dira.algorithms.obstacle.detection.DepthProcessor">
+<em class="property">class </em><code class="sig-prename descclassname">dira.algorithms.obstacle.detection.</code><code class="sig-name descname">DepthProcessor</code><a class="reference internal" href="_modules/dira/algorithms/obstacle/detection.html#DepthProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.obstacle.detection.DepthProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="dira.algorithms.obstacle.detection.DepthProcessor.combine">
+<code class="sig-name descname">combine</code><span class="sig-paren">(</span><em class="sig-param">img_np</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/obstacle/detection.html#DepthProcessor.combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.obstacle.detection.DepthProcessor.combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the final result to control car after combining module detect-obstacle and find-danger-zone
+:param img_np: 
+:return: tuple danger zone (a,b)
+# (0, 0) : No obstacle
+# (-1, middle_point) : 2 obstacles
+# (n, m) : left_edge, right_edge of obstacle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dira.algorithms.obstacle.detection.DepthProcessor.detect_obstacle">
+<code class="sig-name descname">detect_obstacle</code><span class="sig-paren">(</span><em class="sig-param">img_np</em>, <em class="sig-param">n_row=2</em>, <em class="sig-param">lower=15000</em>, <em class="sig-param">upper=1000</em>, <em class="sig-param">min_width=40</em>, <em class="sig-param">min_height=40</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/obstacle/detection.html#DepthProcessor.detect_obstacle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.obstacle.detection.DepthProcessor.detect_obstacle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect obstacle
+:param img_np: input image in gray scale 16 bit 1 channel
+:param n_row: number of rows to check
+:param lower: lower threshold (omit value which is less than T1)
+:param upper: upper threshold (omit value which is greater than T2)
+:param min_width: minimum of bbox’s width
+:param min_height: minimum of bbox’s height
+:return: danger_zone (tuple) (a,b)
+# (0, 0) : No obstacle
+# (-1, middle_point) : 2 obstacles -&gt; go through between them (middle_point)
+# (n, m) : left_edge, right_edge of one obstacle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dira.algorithms.obstacle.detection.DepthProcessor.find_danger_zone">
+<code class="sig-name descname">find_danger_zone</code><span class="sig-paren">(</span><em class="sig-param">obstacle_left</em>, <em class="sig-param">obstacle_right</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/obstacle/detection.html#DepthProcessor.find_danger_zone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.obstacle.detection.DepthProcessor.find_danger_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the danger zone after finding obstacles
+_____________________  danger_zone
+|              |
+V______________V
+|   |      |   |
+|   | bbox |   |
+<a href="#id1"><span class="problematic" id="id2">|___|______|___|</span></a>
+:param obstacle_left: bbox of the nearest left-obstacle (tuple) (x,y,w,h)
+:param obstacle_right: bbox of the nearest right-obstacle (tuple) (x,y,w,h)
+:return: tuple danger zone (a,b)
+# (0, 0) : No obstacle
+# (-1, middle_point) : 2 obstacles
+# (n, m) : left_edge, right_edge of obstacle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dira.algorithms.obstacle.detection.DepthProcessor.find_nearest_object">
+<code class="sig-name descname">find_nearest_object</code><span class="sig-paren">(</span><em class="sig-param">bounding_boxes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/obstacle/detection.html#DepthProcessor.find_nearest_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.obstacle.detection.DepthProcessor.find_nearest_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the nearest object in one side (left or right)
+:param bounding_boxes: list bbox of objects in one side
+Example [(x1,y1,w1,h1), …, (xn,yn,wn,hn)]
+:return: bbox of nearest object - (xi,yi,wi,hi)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dira.algorithms.obstacle.detection.DepthProcessor.remove_ground">
+<code class="sig-name descname">remove_ground</code><span class="sig-paren">(</span><em class="sig-param">gray_img</em>, <em class="sig-param">column</em>, <em class="sig-param">row</em>, <em class="sig-param">n_row</em>, <em class="sig-param">lower</em>, <em class="sig-param">upper</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/obstacle/detection.html#DepthProcessor.remove_ground"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.obstacle.detection.DepthProcessor.remove_ground" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the ground in gray image
+:param gray_img: input gray image 16 bit 1 channel
+:param column: column pixel
+:param row: row pixel
+:param n_row: number of rows to check
+:param lower: lower threshold (omit value which is less than T1)
+:param upper: upper threshold (omit value which is greater than T2)
+:return: pixel’s value (0 if it’s ground, otherwise)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dira.algorithms.obstacle.detection.DepthProcessor.resize_np">
+<code class="sig-name descname">resize_np</code><span class="sig-paren">(</span><em class="sig-param">img_np</em>, <em class="sig-param">percent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/obstacle/detection.html#DepthProcessor.resize_np"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.obstacle.detection.DepthProcessor.resize_np" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resize image
+:param img_np: input any type of np_image
+:param percent: percent to resize image
+:return: image after being resized</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dira.algorithms.obstacle">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dira.algorithms.obstacle" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, FPT-Corp
+      <span class="lastupdated">
+        Last updated on True.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

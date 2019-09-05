@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dira.algorithms.lane.p2c.p2c_main &mdash; DiRa 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../../_static/dira_logo_32.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #343131" >
+          
+
+          
+            <a href="../../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../../_static/dira-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">DiRa</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dira.algorithms.lane.p2c.p2c_main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dira.algorithms.lane.p2c.p2c_main</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.ctypeslib</span> <span class="k">as</span> <span class="nn">npct</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">ct</span>
+<span class="c1"># import get_point as gp</span>
+<span class="c1"># import random</span>
+<span class="c1"># import time</span>
+
+<span class="kn">from</span> <span class="nn">dira.utils.config</span> <span class="k">import</span> <span class="n">Config</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span><span class="o">.</span><span class="n">p2c_path</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">npct</span><span class="o">.</span><span class="n">load_library</span><span class="p">(</span><span class="s1">&#39;p2c&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="mi">160</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="mi">320</span>
+<span class="n">array_2d_int</span> <span class="o">=</span> <span class="n">npct</span><span class="o">.</span><span class="n">ndpointer</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;CONTIGUOUS&#39;</span><span class="p">)</span>
+<span class="n">libc</span><span class="o">.</span><span class="n">get_center_points_by_roi</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">array_2d_int</span><span class="p">,</span> <span class="n">c_float</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">c_int</span><span class="p">)]</span>
+<span class="n">libc</span><span class="o">.</span><span class="n">get_point</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">array_2d_int</span><span class="p">,</span> <span class="n">c_float</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span> <span class="n">c_int</span><span class="p">,</span> <span class="n">c_int</span><span class="p">,</span> <span class="n">c_int</span><span class="p">,</span> <span class="n">c_bool</span><span class="p">,</span> <span class="n">c_int</span><span class="p">]</span>
+<span class="n">libc</span><span class="o">.</span><span class="n">check_future_road</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">array_2d_int</span><span class="p">,</span> <span class="n">c_float</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">c_bool</span><span class="p">),</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span> <span class="n">c_int</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">__get_point</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">roi</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">left_restriction</span><span class="p">,</span> <span class="n">right_restriction</span><span class="p">,</span> <span class="n">has_road</span><span class="p">,</span> <span class="n">road_property</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method is decapitated.</span>
+<span class="sd">    Get road center point by using a horizontal line (ROI) to find intersection points with segmented image</span>
+<span class="sd">    :param img: 2D array segmented image contains only 0s and 1s as values.</span>
+<span class="sd">    :param roi: float number in range of [0, 1], represents the percentage of image height where ROI will be applied. Example: ROI = 0.5 meaning the line is at 50% of image height.</span>
+<span class="sd">    :param flag: status of traffic sign.</span>
+<span class="sd">        - -1 if turn left</span>
+<span class="sd">        - 1 if turn right</span>
+<span class="sd">        - 0 otherwise</span>
+<span class="sd">    :param left_restriction: integer number.</span>
+<span class="sd">        - &gt; 0 if there&#39;s obstacle on the left</span>
+<span class="sd">        - 0 if there is none</span>
+<span class="sd">    :param right_restriction: integer number.</span>
+<span class="sd">        - &gt; 0 if there&#39;s obstacle on the right</span>
+<span class="sd">        - 0 if there is none</span>
+<span class="sd">    :param has_road: boolean</span>
+<span class="sd">        - True if has road beyond ROI.</span>
+<span class="sd">        - False otherwise</span>
+<span class="sd">    :param road_property: integer number, indicate property of the road beyond ROI.</span>
+<span class="sd">        - -1 if the road has the trend of going left</span>
+<span class="sd">        - 0 if the road has the trend of going straight</span>
+<span class="sd">        - 1 if the road has the trend of going right</span>
+<span class="sd">    :return: coordinate of center point:</span>
+<span class="sd">        - x: x coordinate of center point</span>
+<span class="sd">        - y: y coordinate of center point</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p_x</span> <span class="o">=</span> <span class="n">pointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">p_y</span> <span class="o">=</span> <span class="n">pointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">libc</span><span class="o">.</span><span class="n">get_point</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">roi</span><span class="p">,</span> <span class="n">p_x</span><span class="p">,</span> <span class="n">p_y</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">left_restriction</span><span class="p">,</span> <span class="n">right_restriction</span><span class="p">,</span> <span class="n">has_road</span><span class="p">,</span> <span class="n">road_property</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p_x</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">p_y</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">__check_future_road</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">roi</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method is decapitated.</span>
+<span class="sd">    Get property of the road by using a horizontal line (ROI) to find intersection points with segmented image</span>
+<span class="sd">    :param img: 2D array segmented image contains only 0s and 1s as values.</span>
+<span class="sd">    :param roi: float number in range of [0, 1], represents the percentage of image height where ROI will be applied.</span>
+<span class="sd">        Example: ROI = 0.5 means ROI line is at 50% of image height.</span>
+<span class="sd">    :param margin: integer number, is the maximum distance from one side of the road to it corresponding image border in</span>
+<span class="sd">    which that side is considered to have the trend of going to that direction.</span>
+<span class="sd">    :return:</span>
+<span class="sd">        - road property: integer number.</span>
+<span class="sd">            - -1 if the road has the trend of going left</span>
+<span class="sd">            - 0 if the road has the trend of going straight</span>
+<span class="sd">            - 1 if the road has the trend of going right</span>
+<span class="sd">        - has road: boolean</span>
+<span class="sd">            - True if has road.</span>
+<span class="sd">            - False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p_has_road</span> <span class="o">=</span> <span class="n">pointer</span><span class="p">(</span><span class="n">c_bool</span><span class="p">())</span>
+    <span class="n">p_road_property</span> <span class="o">=</span> <span class="n">pointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">libc</span><span class="o">.</span><span class="n">check_future_road</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">roi</span><span class="p">,</span> <span class="n">p_has_road</span><span class="p">,</span> <span class="n">p_road_property</span><span class="p">,</span> <span class="n">margin</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p_road_property</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">p_has_road</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span>
+
+
+<div class="viewcode-block" id="get_center_points_by_roi"><a class="viewcode-back" href="../../../../../dira.algorithms.lane.p2c.html#dira.algorithms.lane.p2c.p2c_main.get_center_points_by_roi">[docs]</a><span class="k">def</span> <span class="nf">get_center_points_by_roi</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get x coordinates of both sidelines of the road by using a horizontal line (ROI) to find intersection points with</span>
+<span class="sd">    segmented image</span>
+<span class="sd">    :param img: 2D array segmented image contains only 0s and 1s as values.</span>
+<span class="sd">    :param roi: float number in range of [0, 1], represents the percentage of image height where ROI will be applied.</span>
+<span class="sd">        Example: ROI = 0.5 means ROI line is at 50% of image height.</span>
+<span class="sd">    :return:</span>
+<span class="sd">        x left: x coordinate of left side of the road</span>
+<span class="sd">        x right: x coordinate of right side of the road</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p_x_left</span> <span class="o">=</span> <span class="n">pointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">())</span>
+    <span class="n">p_x_right</span> <span class="o">=</span> <span class="n">pointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">())</span>
+    <span class="n">libc</span><span class="o">.</span><span class="n">get_center_points_by_roi</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">roi</span><span class="p">,</span> <span class="n">p_x_left</span><span class="p">,</span> <span class="n">p_x_right</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p_x_left</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">p_x_right</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, FPT-Corp
+      <span class="lastupdated">
+        Last updated on True.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

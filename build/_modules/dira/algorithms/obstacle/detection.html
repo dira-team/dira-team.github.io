@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dira.algorithms.obstacle.detection &mdash; DiRa 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/dira_logo_32.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #343131" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/dira-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">DiRa</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>dira.algorithms.obstacle.detection</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for dira.algorithms.obstacle.detection</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># import rospy</span>
+
+
+<div class="viewcode-block" id="DepthProcessor"><a class="viewcode-back" href="../../../../dira.algorithms.obstacle.html#dira.algorithms.obstacle.detection.DepthProcessor">[docs]</a><span class="k">class</span> <span class="nc">DepthProcessor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SCALE</span> <span class="o">=</span> <span class="mi">10000</span>  <span class="c1"># == 1 meter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MAX_UINT16</span> <span class="o">=</span> <span class="mi">65536</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">area_130</span> <span class="o">=</span> <span class="mi">130</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">area_110</span> <span class="o">=</span> <span class="mi">110</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">middle_screen</span> <span class="o">=</span> <span class="p">(</span><span class="mi">140</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DepthProcessor.remove_ground"><a class="viewcode-back" href="../../../../dira.algorithms.obstacle.html#dira.algorithms.obstacle.detection.DepthProcessor.remove_ground">[docs]</a>    <span class="k">def</span> <span class="nf">remove_ground</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gray_img</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">n_row</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove the ground in gray image</span>
+<span class="sd">        :param gray_img: input gray image 16 bit 1 channel</span>
+<span class="sd">        :param column: column pixel</span>
+<span class="sd">        :param row: row pixel</span>
+<span class="sd">        :param n_row: number of rows to check</span>
+<span class="sd">        :param lower: lower threshold (omit value which is less than T1)</span>
+<span class="sd">        :param upper: upper threshold (omit value which is greater than T2)</span>
+<span class="sd">        :return: pixel&#39;s value (0 if it&#39;s ground, otherwise)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">gray_img</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">lower</span> <span class="ow">or</span> <span class="n">gray_img</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">upper</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">gray_img</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">])</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">gray_img</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="n">n_row</span><span class="p">][</span><span class="n">column</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_row</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">gray_img</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="n">i</span><span class="p">][</span><span class="n">column</span><span class="p">])</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">gray_img</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">column</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">gray_img</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">gray_img</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">column</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DepthProcessor.resize_np"><a class="viewcode-back" href="../../../../dira.algorithms.obstacle.html#dira.algorithms.obstacle.detection.DepthProcessor.resize_np">[docs]</a>    <span class="k">def</span> <span class="nf">resize_np</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_np</span><span class="p">,</span> <span class="n">percent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resize image</span>
+<span class="sd">        :param img_np: input any type of np_image</span>
+<span class="sd">        :param percent: percent to resize image</span>
+<span class="sd">        :return: image after being resized</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">img_np</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">percent</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span> <span class="o">*</span> <span class="n">percent</span><span class="p">)</span>
+        <span class="n">resized_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img_np</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">resized_img</span></div>
+
+<div class="viewcode-block" id="DepthProcessor.find_nearest_object"><a class="viewcode-back" href="../../../../dira.algorithms.obstacle.html#dira.algorithms.obstacle.detection.DepthProcessor.find_nearest_object">[docs]</a>    <span class="k">def</span> <span class="nf">find_nearest_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounding_boxes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the nearest object in one side (left or right)</span>
+<span class="sd">        :param bounding_boxes: list bbox of objects in one side</span>
+<span class="sd">        Example [(x1,y1,w1,h1), ..., (xn,yn,wn,hn)]</span>
+<span class="sd">        :return: bbox of nearest object - (xi,yi,wi,hi)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b_new</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">bounding_boxes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">bounding_boxes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bounding_boxes</span><span class="p">)))</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">b_new</span><span class="p">))</span>
+        <span class="n">nearest_obstacle</span> <span class="o">=</span> <span class="n">bounding_boxes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">nearest_obstacle</span></div>
+
+<div class="viewcode-block" id="DepthProcessor.find_danger_zone"><a class="viewcode-back" href="../../../../dira.algorithms.obstacle.html#dira.algorithms.obstacle.detection.DepthProcessor.find_danger_zone">[docs]</a>    <span class="k">def</span> <span class="nf">find_danger_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obstacle_left</span><span class="p">,</span> <span class="n">obstacle_right</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the danger zone after finding obstacles</span>
+<span class="sd">        _____________________  danger_zone</span>
+<span class="sd">        |              |</span>
+<span class="sd">        V______________V</span>
+<span class="sd">        |   |      |   |</span>
+<span class="sd">        |   | bbox |   |</span>
+<span class="sd">        |___|______|___|</span>
+<span class="sd">        :param obstacle_left: bbox of the nearest left-obstacle (tuple) (x,y,w,h)</span>
+<span class="sd">        :param obstacle_right: bbox of the nearest right-obstacle (tuple) (x,y,w,h)</span>
+<span class="sd">        :return: tuple danger zone (a,b)</span>
+<span class="sd">        # (0, 0) : No obstacle</span>
+<span class="sd">        # (-1, middle_point) : 2 obstacles</span>
+<span class="sd">        # (n, m) : left_edge, right_edge of obstacle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># danger zone</span>
+        <span class="n">danger_zone</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># init</span>
+        <span class="c1"># 2 objects</span>
+        <span class="k">if</span> <span class="n">obstacle_left</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">obstacle_right</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">x_left</span><span class="p">,</span> <span class="n">y_left</span><span class="p">,</span> <span class="n">w_left</span><span class="p">,</span> <span class="n">h_left</span><span class="p">)</span> <span class="o">=</span> <span class="n">obstacle_left</span>
+            <span class="p">(</span><span class="n">x_right</span><span class="p">,</span> <span class="n">y_right</span><span class="p">,</span> <span class="n">w_right</span><span class="p">,</span> <span class="n">h_right</span><span class="p">)</span> <span class="o">=</span> <span class="n">obstacle_right</span>
+
+            <span class="c1"># remove the further one if not parallel</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">y_left</span> <span class="o">+</span> <span class="n">h_left</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">y_right</span> <span class="o">+</span> <span class="n">h_right</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+                <span class="n">obstacle_right</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">y_right</span> <span class="o">+</span> <span class="n">h_right</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">y_left</span> <span class="o">+</span> <span class="n">h_left</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+                <span class="n">obstacle_left</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="c1"># go through between them</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right_edge_object_left</span> <span class="o">=</span> <span class="n">x_left</span> <span class="o">+</span> <span class="n">w_left</span>
+                <span class="n">left_edge_object_right</span> <span class="o">=</span> <span class="n">x_right</span>
+
+                <span class="n">center_zone</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">right_edge_object_left</span> <span class="o">+</span> <span class="n">left_edge_object_right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">danger_zone</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">center_zone</span><span class="p">)</span>
+
+        <span class="c1"># single object</span>
+        <span class="k">if</span> <span class="n">obstacle_left</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">obstacle_right</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">=</span> <span class="n">obstacle_left</span>
+            <span class="n">center_object</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">middle_screen</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">center_object</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">middle_screen</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">danger_zone</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_110</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_110</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">danger_zone</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_130</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_130</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">obstacle_right</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">obstacle_left</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">=</span> <span class="n">obstacle_right</span>
+            <span class="n">center_object</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">middle_screen</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">center_object</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">middle_screen</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">danger_zone</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_110</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_110</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">danger_zone</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_130</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_130</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">danger_zone</span></div>
+
+<div class="viewcode-block" id="DepthProcessor.detect_obstacle"><a class="viewcode-back" href="../../../../dira.algorithms.obstacle.html#dira.algorithms.obstacle.detection.DepthProcessor.detect_obstacle">[docs]</a>    <span class="k">def</span> <span class="nf">detect_obstacle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_np</span><span class="p">,</span> <span class="n">n_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">15000</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">min_width</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">min_height</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Detect obstacle</span>
+<span class="sd">        :param img_np: input image in gray scale 16 bit 1 channel</span>
+<span class="sd">        :param n_row: number of rows to check</span>
+<span class="sd">        :param lower: lower threshold (omit value which is less than T1)</span>
+<span class="sd">        :param upper: upper threshold (omit value which is greater than T2)</span>
+<span class="sd">        :param min_width: minimum of bbox&#39;s width</span>
+<span class="sd">        :param min_height: minimum of bbox&#39;s height</span>
+<span class="sd">        :return: danger_zone (tuple) (a,b)</span>
+<span class="sd">        # (0, 0) : No obstacle</span>
+<span class="sd">        # (-1, middle_point) : 2 obstacles -&gt; go through between them (middle_point)</span>
+<span class="sd">        # (n, m) : left_edge, right_edge of one obstacle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># resize</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resize_np</span><span class="p">(</span><span class="n">img_np</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">)</span>
+        <span class="c1"># cv2.imshow(&#39;src&#39;, gray_img)</span>
+
+        <span class="c1"># cv2.waitKey(1)</span>
+
+        <span class="c1"># CLOSE</span>
+        <span class="n">kernel_close</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">morphologyEx</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_CLOSE</span><span class="p">,</span> <span class="n">kernel_close</span><span class="p">)</span>
+
+        <span class="c1"># DILATE</span>
+        <span class="n">kernel_dilate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="n">kernel_dilate</span><span class="p">)</span>
+
+        <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">gray_img</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># remove floor and wall far away...</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+                <span class="c1"># if gray_img[y][x] &gt; T1 or gray_img[y][x] &lt; T2:</span>
+                   <span class="c1"># gray_img[y][x] = 0</span>
+                <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">height</span> <span class="o">-</span> <span class="n">n_row</span><span class="p">:</span>
+                    <span class="n">gray_img</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_ground</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_row</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">gray_img</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Open</span>
+        <span class="n">kernel_open</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">morphologyEx</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_OPEN</span><span class="p">,</span> <span class="n">kernel_open</span><span class="p">)</span>
+
+        <span class="c1"># resize</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resize_np</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="n">gray_uint8</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">convertScaleAbs</span><span class="p">(</span><span class="n">gray_img</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">hierarchy</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">gray_uint8</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_TREE</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+
+        <span class="n">img_rgb_np</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img_np</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_GRAY2RGB</span><span class="p">)</span>
+        <span class="c1"># img_rgb_np = cv2.cvtColor(gray_img, cv2.COLOR_GRAY2RGB)</span>
+        <span class="c1"># cv2.drawContours(img_rgb_np, contours, -1, (MAX_UINT16, 0, 0), 2)</span>
+        <span class="c1"># cv2.imshow(&#39;contours&#39;, img_rgb_np)</span>
+
+        <span class="n">bbox_left</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">bbox_right</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># print(&#39;number of contours&#39;, len(contours))</span>
+        <span class="k">for</span> <span class="n">contour</span> <span class="ow">in</span> <span class="n">contours</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
+
+            <span class="c1"># print(w,h)</span>
+            <span class="k">if</span> <span class="n">h</span> <span class="o">&gt;</span> <span class="n">min_height</span><span class="p">:</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">img_rgb_np</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_UINT16</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="c1"># draw danger zone</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">img_rgb_np</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_110</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">area_110</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">h</span><span class="p">),</span>
+                              <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_UINT16</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+                <span class="n">center_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">center_x</span> <span class="o">&lt;</span> <span class="mi">160</span><span class="p">:</span>
+                    <span class="n">bbox_left</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">bbox_right</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">bbox_left</span><span class="p">,</span> <span class="n">bbox_right</span></div>
+
+<div class="viewcode-block" id="DepthProcessor.combine"><a class="viewcode-back" href="../../../../dira.algorithms.obstacle.html#dira.algorithms.obstacle.detection.DepthProcessor.combine">[docs]</a>    <span class="k">def</span> <span class="nf">combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_np</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the final result to control car after combining module detect-obstacle and find-danger-zone</span>
+<span class="sd">        :param img_np: </span>
+<span class="sd">        :return: tuple danger zone (a,b)</span>
+<span class="sd">        # (0, 0) : No obstacle</span>
+<span class="sd">        # (-1, middle_point) : 2 obstacles</span>
+<span class="sd">        # (n, m) : left_edge, right_edge of obstacle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bbox_left</span><span class="p">,</span> <span class="n">bbox_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect_obstacle</span><span class="p">(</span><span class="n">img_np</span><span class="p">)</span>
+        <span class="n">obstacle_left</span> <span class="o">=</span> <span class="n">obstacle_right</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bbox_left</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">obstacle_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_nearest_object</span><span class="p">(</span><span class="n">bbox_left</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bbox_right</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">obstacle_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_nearest_object</span><span class="p">(</span><span class="n">bbox_right</span><span class="p">)</span>
+
+        <span class="n">danger_zone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_danger_zone</span><span class="p">(</span><span class="n">obstacle_left</span><span class="p">,</span> <span class="n">obstacle_right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">danger_zone</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, FPT-Corp
+      <span class="lastupdated">
+        Last updated on True.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

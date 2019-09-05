@@ -1,0 +1,43 @@
+Running Sphinx v2.2.0
+loading pickled environment... done
+[autosummary] generating autosummary for: dira.algorithms.lane.p2c.rst, dira.algorithms.lane.rst, dira.algorithms.obstacle.rst, dira.algorithms.rst, dira.algorithms.sign.rst, dira.rst, dira.utils.rst, generated/dira.algorithms.lane.segmentation.rst, generated/dira.algorithms.obstacle.detection.rst, generated/dira.algorithms.sign.classification.rst, generated/dira.algorithms.sign.detection.rst, generated/dira.algorithms.sign.find.rst, index.rst, modules.rst
+/mnt/f/Documents/DiRa/dira-lib/dira/p2c
+building [mo]: targets for 0 po files that are out of date
+building [html]: targets for 14 source files that are out of date
+updating environment: 0 added, 0 changed, 0 removed
+looking for now-outdated files... none found
+preparing documents... done
+writing output... [  7%] dira
+writing output... [ 14%] dira.algorithms
+writing output... [ 21%] dira.algorithms.lane
+writing output... [ 28%] dira.algorithms.lane.p2c
+writing output... [ 35%] dira.algorithms.obstacle
+writing output... [ 42%] dira.algorithms.sign
+writing output... [ 50%] dira.utils
+writing output... [ 57%] generated/dira.algorithms.lane.segmentation
+writing output... [ 64%] generated/dira.algorithms.obstacle.detection
+writing output... [ 71%] generated/dira.algorithms.sign.classification
+writing output... [ 78%] generated/dira.algorithms.sign.detection
+writing output... [ 85%] generated/dira.algorithms.sign.find
+writing output... [ 92%] index
+writing output... [100%] modules
+
+generating indices...  genindex py-modindexdone
+highlighting module code... [ 11%] dira.algorithms.lane.model_lane
+highlighting module code... [ 22%] dira.algorithms.lane.p2c.p2c_main
+highlighting module code... [ 33%] dira.algorithms.lane.segmentation
+highlighting module code... [ 44%] dira.algorithms.obstacle.detection
+highlighting module code... [ 55%] dira.algorithms.sign.classification
+highlighting module code... [ 66%] dira.algorithms.sign.detection
+highlighting module code... [ 77%] dira.algorithms.sign.find
+highlighting module code... [ 88%] dira.algorithms.sign.model_sign
+highlighting module code... [100%] dira.utils.config
+
+writing additional pages...  searchdone
+copying static files... ... done
+copying extra files... done
+dumping search index in English (code: en)... done
+dumping object inventory... done
+build succeeded.
+
+The HTML pages are in ../docs/build.

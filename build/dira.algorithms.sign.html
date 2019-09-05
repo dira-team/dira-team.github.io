@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dira.algorithms.sign package &mdash; DiRa 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/dira_logo_32.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #343131" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/dira-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">dira.algorithms.sign package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-dira.algorithms.sign.classification">dira.algorithms.sign.classification module</a></li>
+<li><a class="reference internal" href="#module-dira.algorithms.sign.detection">dira.algorithms.sign.detection module</a></li>
+<li><a class="reference internal" href="#module-dira.algorithms.sign.find">dira.algorithms.sign.find module</a></li>
+<li><a class="reference internal" href="#module-dira.algorithms.sign.model_sign">dira.algorithms.sign.model_sign module</a></li>
+<li><a class="reference internal" href="#module-dira.algorithms.sign">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DiRa</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>dira.algorithms.sign package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/fpt-dira/dira-docs/blob/master/docs/dira.algorithms.sign.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dira-algorithms-sign-package">
+<h1>dira.algorithms.sign package<a class="headerlink" href="#dira-algorithms-sign-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dira.algorithms.sign.classification">
+<span id="dira-algorithms-sign-classification-module"></span><h2>dira.algorithms.sign.classification module<a class="headerlink" href="#module-dira.algorithms.sign.classification" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dira.algorithms.sign.classification.CNN">
+<em class="property">class </em><code class="sig-prename descclassname">dira.algorithms.sign.classification.</code><code class="sig-name descname">CNN</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/sign/classification.html#CNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.classification.CNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="dira.algorithms.sign.classification.CNN.predict_sign">
+<code class="sig-name descname">predict_sign</code><span class="sig-paren">(</span><em class="sig-param">img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/sign/classification.html#CNN.predict_sign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.classification.CNN.predict_sign" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Classify a traffic sign. Currently support 2 signs:</dt><dd><p>1: TURN_RIGHT
+2: TURN_LEFT</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>img</strong> – numpy RGB image of the traffic sign, not normalized (range 0-255)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>int sign type:
+0: SIGN_NONE
+1: SIGN_TURN_RIGHT
+2: SIGN_TURN_LEFT</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sign_classifier</span><span class="o">.</span><span class="n">predict_sign</span><span class="p">(</span><span class="n">rgbimg</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Input image with a different colour space from RGB might give inaccurate result.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dira.algorithms.sign.classification.CNN.preprocess">
+<code class="sig-name descname">preprocess</code><span class="sig-paren">(</span><em class="sig-param">img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/sign/classification.html#CNN.preprocess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.classification.CNN.preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preprocess an image for the classifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>img</strong> – numpy RGB image of the traffic sign, not normalized (range 0-255)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy gray-scale image with shape (height, width, 1)</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sign_classifier</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">rgb_img</span><span class="p">)</span>
+<span class="go">ndarray</span>
+</pre></div>
+</div>
+<p>Input image with a different colour space from RGB might give unexpected result.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dira.algorithms.sign.detection">
+<span id="dira-algorithms-sign-detection-module"></span><h2>dira.algorithms.sign.detection module<a class="headerlink" href="#module-dira.algorithms.sign.detection" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dira.algorithms.sign.detection.SignDetector">
+<em class="property">class </em><code class="sig-prename descclassname">dira.algorithms.sign.detection.</code><code class="sig-name descname">SignDetector</code><a class="reference internal" href="_modules/dira/algorithms/sign/detection.html#SignDetector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.detection.SignDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="dira.algorithms.sign.detection.SignDetector.detect_sign">
+<code class="sig-name descname">detect_sign</code><span class="sig-paren">(</span><em class="sig-param">img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/sign/detection.html#SignDetector.detect_sign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.detection.SignDetector.detect_sign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect and classify a traffic sign in the input image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>img</strong> – numpy RGB image, not normalized (range 0-255)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2 values, including:
+___1. int sign type:</p>
+<blockquote>
+<div><p>0: SIGN_NONE
+1: SIGN_TURN_RIGHT
+2: SIGN_TURN_LEFT</p>
+</div></blockquote>
+<p>___2. a tuple specifying sign position and size (x, y, w, h), in which (x,y) is the coordinate of the
+top left pixel of the traffic sign, w is width and h is height.</p>
+</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">detect_sign</span><span class="p">(</span><span class="n">rgb_frame</span><span class="p">)</span>
+<span class="go">1, (60, 60, 100, 100)</span>
+</pre></div>
+</div>
+<p>Input image with a different colour space from RGB might give inaccurate result.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dira.algorithms.sign.find">
+<span id="dira-algorithms-sign-find-module"></span><h2>dira.algorithms.sign.find module<a class="headerlink" href="#module-dira.algorithms.sign.find" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="dira.algorithms.sign.find.ObjectFinder">
+<em class="property">class </em><code class="sig-prename descclassname">dira.algorithms.sign.find.</code><code class="sig-name descname">ObjectFinder</code><span class="sig-paren">(</span><em class="sig-param">hsv_color_ranges=((100</em>, <em class="sig-param">120)</em>, <em class="sig-param">)</em>, <em class="sig-param">min_saturation=127</em>, <em class="sig-param">min_value=100</em>, <em class="sig-param">min_sign_size=50</em>, <em class="sig-param">differential_rate=0.2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/sign/find.html#ObjectFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.find.ObjectFinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="dira.algorithms.sign.find.ObjectFinder.find_by_color">
+<code class="sig-name descname">find_by_color</code><span class="sig-paren">(</span><em class="sig-param">img_np</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/sign/find.html#ObjectFinder.find_by_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.find.ObjectFinder.find_by_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find objects in the input image based on color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_np</strong> – numpy RGB image, not normalized (range 0-255)</p></li>
+<li><p><strong>hsv_color_ranges</strong> – sequence of color ranges to be detected. Each range is comprised of lower bound and upper bound.</p></li>
+<li><p><strong>min_saturation</strong> – the minimum saturation to be detected.</p></li>
+<li><p><strong>min_value</strong> – the minimum value (or brightness) to be detected.</p></li>
+<li><p><strong>min_sign_size</strong> – the minimum size (in pixel) of traffic sign to be detected.</p></li>
+<li><p><strong>differential_rate</strong> – the maximum differential rate between height and width of the traffic sign to be detected. This rate is computed using the formula: <a href="#id1"><span class="problematic" id="id2">|width-height|</span></a> / [(width+height)/2]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2 lists:
+___1. List of numpy rgb images of colour-matched regions.
+___2. List of the respectively region’s position and size. Each element of the list is a tuple (x,y,w,h), in which (x,y) is the coordinate of the top left pixel of the region, w is width and h is height.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">find_by_color</span><span class="p">(</span><span class="n">rgb_frame</span><span class="p">)</span>
+<span class="go">(np.array, np.array), ((60,60,100,100), (80,80,30,30), )</span>
+</pre></div>
+</div>
+<p>Input image with a different colour space from RGB might give bad result.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dira.algorithms.sign.model_sign">
+<span id="dira-algorithms-sign-model-sign-module"></span><h2>dira.algorithms.sign.model_sign module<a class="headerlink" href="#module-dira.algorithms.sign.model_sign" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="dira.algorithms.sign.model_sign.model_sign">
+<code class="sig-prename descclassname">dira.algorithms.sign.model_sign.</code><code class="sig-name descname">model_sign</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/dira/algorithms/sign/model_sign.html#model_sign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dira.algorithms.sign.model_sign.model_sign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-dira.algorithms.sign">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dira.algorithms.sign" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, FPT-Corp
+      <span class="lastupdated">
+        Last updated on True.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
